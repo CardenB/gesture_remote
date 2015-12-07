@@ -7,7 +7,7 @@ class Command {
 public:
   Command();
   explicit Command(const std::string &name);
-  bool LearnCommand(const Serial &pc);
+  bool LearnCommand(Serial &pc);
   bool TransmitCommand();
 
 private:
@@ -18,4 +18,6 @@ private:
   int bitlength_;
   static const int kmax_fail_count_ = 3;
 };
+
+
 

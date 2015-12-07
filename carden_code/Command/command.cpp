@@ -6,11 +6,11 @@ Command::Command(const string &name) {
   memset(cmd_buf_, 0x00, sizeof(cmd_buf_));
   learned_command_ = false;
   bitlength_ = -1;
+  command_name_ = name;
 }
 
-// TODO(carden): Consider implementing a timeout.
-bool Command::LearnCommand(const Serial &pc) {
-  pc.printf("learning command: %s\n", command_name_);
+bool Command::LearnCommand(Serial &pc) {
+  pc.printf("learning command: %s\r\n", command_name_.c_str());
   while (!learned_command_) {
     bitlength_ = receive(&format_, cmd_buf_, sizeof(cmd_buf_));
     if (bitlength_ > 0) {
@@ -40,7 +40,8 @@ bool Command::TransmitCommand() {
       }
     } else {
       display_status("TRAN", xmit_bitlen);
+      return true;
     }
   }
 }
-}
+
